@@ -68,8 +68,8 @@ La base de datos cuenta con una integridad referencial estricta (`ON DELETE CASC
 
 ### 1. Clonar e Instalar
 
-git clone [https://github.com/tu-usuario/sobreahorro.git](https://github.com/tu-usuario/sobreahorro.git)
-cd sobreahorro
+git clone https://github.com/Cartan20223/AhorroPro-Beta
+cd AhorroPro
 
 2. Configurar el Backend
 cd backend
