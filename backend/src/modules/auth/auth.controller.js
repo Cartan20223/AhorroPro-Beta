@@ -35,10 +35,12 @@ const register = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -48,6 +50,12 @@ const register = async (req, res, next) => {
       email: user.email
     });
   } catch (error) {
+    console.error('❌ ERROR DETALLADO EN REGISTRO:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      cause: error.cause,
+    });
     next(error);
   }
 };
@@ -74,10 +82,12 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -87,20 +97,34 @@ const login = async (req, res, next) => {
       email: user.email
     });
   } catch (error) {
+    console.error('❌ ERROR DETALLADO EN LOGIN:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      cause: error.cause,
+    });
     next(error);
   }
 };
 
 const logout = async (req, res, next) => {
   try {
+    const isProduction = process.env.NODE_ENV === 'production';
+
     res.clearCookie('token', {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax'
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax'
     });
 
     res.json({ message: 'Logged out successfully' });
   } catch (error) {
+    console.error('❌ ERROR DETALLADO EN LOGOUT:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      cause: error.cause,
+    });
     next(error);
   }
 };
