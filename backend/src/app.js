@@ -2,6 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const allowedOrigins  = [
+  'https://ahorro-pro-beta.vercel.app',
+  'https://ahorro-pro-beta.vercel.app/'
+];
+
 const authRoutes = require('./modules/auth/auth.routes');
 const userRoutes = require('./modules/user/user.routes');
 const envelopeRoutes = require('./modules/envelope/envelope.routes');
@@ -14,7 +19,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://ahorro-pro-beta.vercel.app/',
+  origin: function (origin, callback){
+    if (!origin || allowedOrigins.indexOf(origin)!== -1 || origin.endsWith('.vercel.app')){
+      callback(null, true);
+    } else {
+      callback(new Error('Bloqueado por CORS'));
+    }
+  },
   credentials: true,
 }));
 
