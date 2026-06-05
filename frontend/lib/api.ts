@@ -152,4 +152,6 @@ export class ApiClientError extends Error {
   }
 }
 
-export const api = new ApiClient();
+export const api = new ApiClient(
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
+);
