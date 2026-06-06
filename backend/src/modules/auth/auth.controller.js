@@ -35,7 +35,7 @@ const register = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
 
     res.cookie('token', token, {
       httpOnly: true,
@@ -82,7 +82,7 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
 
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
 
     res.cookie('token', token, {
       httpOnly: true,
@@ -109,7 +109,7 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
 
     res.clearCookie('token', {
       httpOnly: true,
