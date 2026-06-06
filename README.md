@@ -9,6 +9,7 @@
 **AhorroPro** es una aplicación web full-stack de finanzas personales basada en la probada metodología de los sobres (*envelope budgeting*). Diseñada como MVP para el tecnólogo en ADSO (SENA), la plataforma permite a los usuarios gestionar su capital, proyectar metas mensuales y mantenerse motivados a través de un sistema gamificado de insignias y logros.
 
 ---
+Disponible beta en el siguiente enlace : https://ahorro-pro-beta.vercel.app/
 
 ## 🚀 Arquitectura y Despliegue (Monorepo)
 
